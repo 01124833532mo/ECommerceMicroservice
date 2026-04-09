@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ECommerce.Core.RepositoriesContracts;
+using ECommerce.Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,8 @@ namespace ECommerce.Infrastructure
         {
             // Register infrastructure services here
             // e.g., services.AddScoped<IEmailService, EmailService>();
+
+            services.AddSingleton<IUserRepository, UserRepository>();
             return services;
         }
     }

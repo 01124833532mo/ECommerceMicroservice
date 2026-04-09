@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ECommerce.Core.ServiceContracts;
+using ECommerce.Core.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerce.Core
 {
@@ -13,6 +10,8 @@ namespace ECommerce.Core
         {
             // Register infrastructure services here
             // e.g., services.AddScoped<IEmailService, EmailService>();
+
+            services.AddScoped<IUserService, UserService>();
             return services;
         }
     }
