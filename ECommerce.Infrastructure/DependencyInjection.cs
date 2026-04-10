@@ -1,11 +1,7 @@
 ﻿using ECommerce.Core.RepositoriesContracts;
+using ECommerce.Infrastructure.DbContext;
 using ECommerce.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECommerce.Infrastructure
 {
@@ -15,6 +11,7 @@ namespace ECommerce.Infrastructure
         {
             // Register infrastructure services here
             // e.g., services.AddScoped<IEmailService, EmailService>();
+            services.AddTransient<DapperDbContext>();
 
             services.AddSingleton<IUserRepository, UserRepository>();
             return services;
