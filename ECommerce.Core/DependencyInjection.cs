@@ -1,5 +1,7 @@
 ﻿using ECommerce.Core.ServiceContracts;
 using ECommerce.Core.Services;
+using ECommerce.Core.Validators;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerce.Core
@@ -12,6 +14,10 @@ namespace ECommerce.Core
             // e.g., services.AddScoped<IEmailService, EmailService>();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
+            services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
+
+
             return services;
         }
     }
