@@ -1,4 +1,4 @@
-﻿using ECommerce.Core.DTO;
+﻿using Dapper;
 using ECommerce.Core.Entities;
 using ECommerce.Core.RepositoriesContracts;
 using ECommerce.Infrastructure.DbContext;
@@ -17,18 +17,31 @@ namespace ECommerce.Infrastructure.Repositories
         {
             User.UserId = Guid.NewGuid();
 
-            return User;
+            var query = "INSERT INTO public.\"Users\"(\"UserId\", \"Email\", \"PersonName\", \"Gender\", \"Password\") VALUES (@UserId, @Email, @PersonName, @Gender, @Password)";
+            var rowcountaffected = await _dapperDbContext.Connection.ExecuteAsync(query, User);
+
+            if (rowcountaffected > 0)
+            {
+                return User;
+            }
+            return null;
         }
         public async Task<ApplicationUser?> GetUserByEmailAndPassword(string email, string password)
         {
-            return new ApplicationUser
+            var query = "SELECT * FROM public.\"Users\" WHERE \"Email\" = @Email AND \"Password\" = @Password";
+            ApplicationUser? user = await _dapperDbContext.Connection.QueryFirstOrDefaultAsync<ApplicationUser>(query,
+                new { Email = email, Password = password }
+                );
+
+            if (user == null)
             {
-                UserId = Guid.NewGuid(),
-                Email = email,
-                Password = password,
-                PersonName = "John Doe",
-                Gender = GenderOptions.Male.ToString()
-            };
+                return null;
+            }
+
+
+
+            return user;
         }
+
     }
 }
